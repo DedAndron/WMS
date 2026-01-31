@@ -1,0 +1,15 @@
+C:\Users\USER\Desktop\PV521_2\CSharp\WMS\bin\Debug\net9.0\WMS.exe
+C:\Users\USER\Desktop\PV521_2\CSharp\WMS\bin\Debug\net9.0\WMS.deps.json
+C:\Users\USER\Desktop\PV521_2\CSharp\WMS\bin\Debug\net9.0\WMS.runtimeconfig.json
+C:\Users\USER\Desktop\PV521_2\CSharp\WMS\bin\Debug\net9.0\WMS.dll
+C:\Users\USER\Desktop\PV521_2\CSharp\WMS\bin\Debug\net9.0\WMS.pdb
+C:\Users\USER\Desktop\PV521_2\CSharp\WMS\obj\Debug\net9.0\WMS.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\USER\Desktop\PV521_2\CSharp\WMS\obj\Debug\net9.0\WMS.AssemblyInfoInputs.cache
+C:\Users\USER\Desktop\PV521_2\CSharp\WMS\obj\Debug\net9.0\WMS.AssemblyInfo.cs
+C:\Users\USER\Desktop\PV521_2\CSharp\WMS\obj\Debug\net9.0\WMS.csproj.CoreCompileInputs.cache
+C:\Users\USER\Desktop\PV521_2\CSharp\WMS\obj\Debug\net9.0\WMS.sourcelink.json
+C:\Users\USER\Desktop\PV521_2\CSharp\WMS\obj\Debug\net9.0\WMS.dll
+C:\Users\USER\Desktop\PV521_2\CSharp\WMS\obj\Debug\net9.0\refint\WMS.dll
+C:\Users\USER\Desktop\PV521_2\CSharp\WMS\obj\Debug\net9.0\WMS.pdb
+C:\Users\USER\Desktop\PV521_2\CSharp\WMS\obj\Debug\net9.0\WMS.genruntimeconfig.cache
+C:\Users\USER\Desktop\PV521_2\CSharp\WMS\obj\Debug\net9.0\ref\WMS.dll

@@ -6,22 +6,23 @@ using System.Threading.Tasks;
 
 namespace WMS
 {
-    interface IInvertoryControl
+    interface IInventoryControl
     {
-        void AddItem(Product p);
-        bool RemoveItem(string id);
+        void AddItem(Product product);
+        bool RemoveItem(int id);
         Product FindProduct(string name);
-
+        void MakeInventory();
         List<Product> SortByType(Type productType);
         List<Product> SortByName();
         List<Product> SortByPrice();
         List<Product> SortByWeight();
     }
-    internal class Storekeeper : Worker, IInvertoryControl
+    internal class Storekeeper : Worker, IInventoryControl
     {
         private Warehouse _warehouse;
 
-        public Storekeeper(Warehouse warehouse)
+        public Storekeeper(string name, Warehouse warehouse)
+            : base(name)
         {
             _warehouse = warehouse;
         }
@@ -31,18 +32,23 @@ namespace WMS
             _warehouse.Add(product);
         }
 
-        public bool RemoveItem(string id)
+        public bool RemoveItem(int id)
         {
             return _warehouse.RemoveById(id);
         }
 
         public Product FindProduct(string name)
         {
-            var product = _warehouse.FindByName(name);
-            if (product == null)
-                throw new InvalidOperationException("Product not found.");
+            return _warehouse.FindProduct(name);
+        }
 
-            return product;
+        public void MakeInventory()
+        {
+            Console.WriteLine("Inventory list:");
+            foreach (var product in _warehouse.GetAll())
+            {
+                Console.WriteLine(product);
+            }
         }
         public List<Product> SortByType(Type productType)
         {

@@ -9,34 +9,35 @@ namespace WMS
 {
 
     internal class Warehouse
+{
+    private List<Product> _products = new();
+
+    public void Add(Product product)
     {
-        private List<Product> _products = new();
-
-        public void Add(Product product)
-        {
-            _products.Add(product);
-        }
-
-        public bool RemoveById(string id)
-        {
-            var product = _products.FirstOrDefault(p => p.ID.ToString() == id);
-            if (product == null) return false;
-
-            _products.Remove(product);
-            return true;
-        }
-
-        public Product FindByName(string name)
-        {
-            if (string.IsNullOrWhiteSpace(name))
-                throw new ArgumentException("Invalid name", nameof(name));
-
-            return _products.FirstOrDefault(p => p.Name == name);
-        }
-
-        public IReadOnlyList<Product> GetAll()
-        {
-            return _products.AsReadOnly();
-        }
+        _products.Add(product);
     }
+
+    public bool RemoveById(int id)
+    {
+        var product = _products.FirstOrDefault(p => p.ID == id);
+        if (product == null) return false;
+
+        _products.Remove(product);
+        return true;
+    }
+
+    public Product FindProduct(string name)
+    {
+        if (string.IsNullOrWhiteSpace(name))
+            throw new ArgumentException("Invalid name", nameof(name));
+
+        return _products.FirstOrDefault(p => p.Name == name);
+    }
+
+    public IReadOnlyList<Product> GetAll()
+    {
+        return _products.AsReadOnly();
+    }
+}
+
 }

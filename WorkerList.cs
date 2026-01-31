@@ -8,10 +8,41 @@ namespace WMS
 {
     internal class WorkerList
     {
-        public List<Worker> workers;
-        public WorkerList(Worker worker)
+        private List<Worker> _workers = new();
+
+        public void AddWorker(Worker worker)
         {
-            workers = new List<Worker>();
+            _workers.Add(worker);
+        }
+
+        public bool BlockWorker(string name)
+        {
+            var worker = _workers.FirstOrDefault(w => w.Name == name);
+
+            if (worker == null)
+                throw new ArgumentNullException(nameof(name), "Worker not found!");
+
+            if (!worker.Active)
+                throw new InvalidOperationException("The worker is already blocked!");
+
+            worker.Active = false;
+            return true;
+        }
+
+        public void ChangePost(Worker oldWorker, Worker newWorker)
+        {
+            int index = _workers.IndexOf(oldWorker);
+
+            if (index == -1)
+                throw new InvalidOperationException("Worker not found!");
+
+            _workers[index] = newWorker;
+        }
+
+        public IReadOnlyList<Worker> GetAll()
+        {
+            return _workers.AsReadOnly();
         }
     }
+
 }

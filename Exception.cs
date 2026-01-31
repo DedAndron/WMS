@@ -14,4 +14,12 @@ namespace WMS
     {
         public InvalidExpiryDateException(string message) : base(message) { }
     }
+    internal class NullException : ApplicationException
+    {
+        public NullException(string message) : base(message) { }
+    }
+    internal class BlockedWorkerException : ApplicationException
+    {
+        public BlockedWorkerException(string message) : base(message) { }
+    }
 }
