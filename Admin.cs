@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace WMS
+﻿namespace WMS
 {
     interface IWorkersControl
     {
@@ -15,7 +9,7 @@ namespace WMS
 
     internal class Admin : Worker, IWorkersControl
     {
-        private WorkerList _workerList;
+        private readonly WorkerList _workerList;
 
         public Admin(string name, WorkerList workerList)
             : base(name)
@@ -40,5 +34,4 @@ namespace WMS
             _workerList.ChangePost(worker, newRole, warehouse);
         }
     }
-
 }

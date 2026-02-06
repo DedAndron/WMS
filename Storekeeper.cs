@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace WMS
 {
@@ -10,16 +8,17 @@ namespace WMS
     {
         void AddItem(Product product);
         bool RemoveItem(int id);
-        Product FindProduct(string name);
+        Product? FindProduct(string name);
         void MakeInventory();
         List<Product> SortByType(Type productType);
         List<Product> SortByName();
         List<Product> SortByPrice();
         List<Product> SortByWeight();
     }
+
     internal class Storekeeper : Worker, IInventoryControl
     {
-        private Warehouse _warehouse;
+        private readonly Warehouse _warehouse;
 
         public Storekeeper(string name, Warehouse warehouse)
             : base(name)
@@ -37,7 +36,7 @@ namespace WMS
             return _warehouse.RemoveById(id);
         }
 
-        public Product FindProduct(string name)
+        public Product? FindProduct(string name)
         {
             return _warehouse.FindProduct(name);
         }
@@ -50,12 +49,14 @@ namespace WMS
                 Console.WriteLine(product);
             }
         }
+
         public List<Product> SortByType(Type productType)
         {
             return _warehouse.GetAll()
                 .OrderBy(p => p.GetType() == productType ? 0 : 1)
                 .ToList();
         }
+
         public List<Product> SortByName()
         {
             return _warehouse.GetAll()

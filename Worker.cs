@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace WMS
+﻿namespace WMS
 {
     internal enum WorkerRole
     {
@@ -17,7 +15,10 @@ namespace WMS
 
         protected Worker(string name)
         {
-            Name = name;
+            if (string.IsNullOrWhiteSpace(name))
+                throw new ArgumentException("Worker name cannot be empty.", nameof(name));
+
+            Name = name.Trim();
         }
     }
 }

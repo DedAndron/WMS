@@ -1,18 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace WMS
+﻿namespace WMS
 {
     internal class Electronics : Product
     {
         public int WarrantyPeriod { get; set; }
-        public int Voltage {  get; set; }
+        public int Voltage { get; set; }
+
         public override void GetStorageRequirements()
         {
-            throw new NotImplementedException();
+            Console.WriteLine("Storage requirements: keep in dry room, avoid overheating.");
         }
     }
 }

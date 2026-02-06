@@ -23,6 +23,11 @@ namespace WMS
 
         public void Add(Product product)
         {
+            ArgumentNullException.ThrowIfNull(product);
+
+            if (_products.Any(p => p.ID == product.ID))
+                throw new InvalidOperationException($"Product with ID {product.ID} already exists.");
+
             _products.Add(product);
             CheckLowStock(product);
         }
@@ -30,7 +35,8 @@ namespace WMS
         public bool RemoveById(int id)
         {
             var product = _products.FirstOrDefault(p => p.ID == id);
-            if (product == null) return false;
+            if (product == null)
+                return false;
 
             _products.Remove(product);
             return true;
@@ -64,12 +70,13 @@ namespace WMS
             return true;
         }
 
-        public Product FindProduct(string name)
+        public Product? FindProduct(string name)
         {
             if (string.IsNullOrWhiteSpace(name))
                 throw new ArgumentException("Invalid name", nameof(name));
 
-            return _products.FirstOrDefault(p => p.Name == name);
+            return _products.FirstOrDefault(p =>
+                string.Equals(p.Name, name.Trim(), StringComparison.OrdinalIgnoreCase));
         }
 
         public IReadOnlyList<Product> GetAll()

@@ -10,12 +10,17 @@ namespace WMS
 
         public void AddWorker(Worker worker)
         {
+            ArgumentNullException.ThrowIfNull(worker);
+
+            if (_workers.Any(w => string.Equals(w.Name, worker.Name, StringComparison.OrdinalIgnoreCase)))
+                throw new InvalidOperationException($"Worker '{worker.Name}' already exists.");
+
             _workers.Add(worker);
         }
 
         public bool BlockWorker(string name)
         {
-            var worker = _workers.FirstOrDefault(w => w.Name == name);
+            var worker = _workers.FirstOrDefault(w => string.Equals(w.Name, name, StringComparison.OrdinalIgnoreCase));
 
             if (worker == null)
                 throw new ArgumentNullException(nameof(name), "Worker not found!");

@@ -47,7 +47,12 @@ namespace WMS
         private void AddWorker()
         {
             Console.Write("Worker name: ");
-            var name = Console.ReadLine() ?? string.Empty;
+            var name = (Console.ReadLine() ?? string.Empty).Trim();
+            if (string.IsNullOrWhiteSpace(name))
+            {
+                Console.WriteLine("Name cannot be empty.");
+                return;
+            }
 
             Console.Write("Role (admin/manager/storekeeper): ");
             var roleInput = (Console.ReadLine() ?? string.Empty).Trim().ToLowerInvariant();
@@ -72,15 +77,16 @@ namespace WMS
         private void BlockWorker()
         {
             Console.Write("Worker name to block: ");
-            var name = Console.ReadLine() ?? string.Empty;
+            var name = (Console.ReadLine() ?? string.Empty).Trim();
             _admin.BlockWorker(name);
         }
 
         private void ChangeWorkerRole()
         {
             Console.Write("Worker name: ");
-            var name = Console.ReadLine() ?? string.Empty;
-            var worker = _workerList.GetAll().FirstOrDefault(w => w.Name == name);
+            var name = (Console.ReadLine() ?? string.Empty).Trim();
+            var worker = _workerList.GetAll()
+                .FirstOrDefault(w => string.Equals(w.Name, name, StringComparison.OrdinalIgnoreCase));
 
             if (worker == null)
             {

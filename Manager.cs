@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace WMS
+﻿namespace WMS
 {
     interface IFinanceControl
     {
@@ -29,9 +23,11 @@ namespace WMS
 
         public void ChangePrice(Product product, decimal newPrice)
         {
+            if (newPrice < 0)
+                throw new ArgumentOutOfRangeException(nameof(newPrice), "Price cannot be negative.");
+
             product.Price = newPrice;
             Console.WriteLine($"Price for {product.Name} changed to {newPrice}");
         }
     }
-
 }

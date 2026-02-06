@@ -44,7 +44,7 @@ namespace WMS
 
                 try
                 {
-                    MainMenu menu = operation switch
+                    MainMenu? menu = operation switch
                     {
                         1 => new AdminMenu(admin, workerList, warehouse),
                         2 => new ManagerMenu(manager, warehouse),

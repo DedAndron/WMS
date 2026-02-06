@@ -1,23 +1,22 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace WMS
+﻿namespace WMS
 {
     internal class PerishableProduct : Product
     {
         public DateTime ExpiryDate { get; set; }
-        public PerishableProduct (DateTime ExpiryDate)
+
+        public PerishableProduct()
         {
-            this.ExpiryDate = ExpiryDate;
+            ExpiryDate = DateTime.Today;
+        }
+
+        public PerishableProduct(DateTime expiryDate)
+        {
+            ExpiryDate = expiryDate;
         }
 
         public override void GetStorageRequirements()
         {
-            throw new NotImplementedException();
+            Console.WriteLine($"Storage requirements: keep refrigerated. Expiry date: {ExpiryDate:yyyy-MM-dd}.");
         }
     }
 }
