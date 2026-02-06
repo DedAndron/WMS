@@ -57,7 +57,7 @@ namespace WMS
             Console.Write("Role (admin/manager/storekeeper): ");
             var roleInput = (Console.ReadLine() ?? string.Empty).Trim().ToLowerInvariant();
 
-            var worker = roleInput switch
+            Worker? worker = roleInput switch
             {
                 "admin" => new Admin(name, _workerList),
                 "manager" => new Manager(name),

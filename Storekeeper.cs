@@ -46,7 +46,7 @@ namespace WMS
             Console.WriteLine("Inventory list:");
             foreach (var product in _warehouse.GetAll())
             {
-                Console.WriteLine(product);
+                Console.WriteLine($"[{product.GetType().Name}] {product}");
             }
         }
 

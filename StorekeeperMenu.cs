@@ -58,7 +58,12 @@ namespace WMS
 
         private void AddProduct()
         {
-            Electronics product = new();
+            Product? product = CreateProductByType();
+            if (product == null)
+            {
+                Console.WriteLine("Unknown product type.");
+                return;
+            }
 
             Console.Write("ID: ");
             if (!int.TryParse(Console.ReadLine(), out var id))
@@ -97,10 +102,72 @@ namespace WMS
             product.Weight = weight;
             product.Quantity = quantity;
 
+            FillSpecificFields(product);
+
             _storekeeper.AddItem(product);
-            Console.WriteLine("Product added.");
+            Console.WriteLine($"Product added with type: {product.GetType().Name}.");
         }
 
+        private static Product? CreateProductByType()
+        {
+            Console.WriteLine("Choose product type:");
+            Console.WriteLine("1 - Electronics");
+            Console.WriteLine("2 - FragileProduct");
+            Console.WriteLine("3 - PerishableProduct");
+            Console.Write("Type number: ");
+
+            if (!int.TryParse(Console.ReadLine(), out var typeChoice))
+            {
+                return null;
+            }
+
+            switch (typeChoice)
+            {
+                case 1:
+                    return new Electronics();
+                case 2:
+                    return new FragileProduct();
+                case 3:
+                    return new PerishableProduct();
+                default:
+                    return null;
+            }
+        }
+        private static void FillSpecificFields(Product product)
+        {
+            switch (product)
+            {
+                case Electronics electronics:
+                    Console.Write("Warranty period (months): ");
+                    if (int.TryParse(Console.ReadLine(), out var warrantyPeriod))
+                    {
+                        electronics.WarrantyPeriod = warrantyPeriod;
+                    }
+
+                    Console.Write("Voltage: ");
+                    if (int.TryParse(Console.ReadLine(), out var voltage))
+                    {
+                        electronics.Voltage = voltage;
+                    }
+                    break;
+
+                case FragileProduct fragileProduct:
+                    Console.Write("Max stacking height: ");
+                    if (int.TryParse(Console.ReadLine(), out var maxHeight))
+                    {
+                        fragileProduct.MaxStakingHeight = maxHeight;
+                    }
+                    break;
+
+                case PerishableProduct perishableProduct:
+                    Console.Write("Expiry date (yyyy-MM-dd): ");
+                    if (DateTime.TryParse(Console.ReadLine(), out var expiryDate))
+                    {
+                        perishableProduct.ExpiryDate = expiryDate;
+                    }
+                    break;
+            }
+        }
         private void RemoveProduct()
         {
             Console.Write("Product ID: ");
@@ -120,14 +187,16 @@ namespace WMS
             var name = Console.ReadLine() ?? string.Empty;
             var product = _storekeeper.FindProduct(name);
 
-            Console.WriteLine(product == null ? "Product not found." : product.ToString());
+            Console.WriteLine(product == null
+                ? "Product not found."
+                : $"[{product.GetType().Name}] {product}");
         }
 
         private static void PrintProducts(IEnumerable<Product> products)
         {
             foreach (var product in products)
             {
-                Console.WriteLine(product);
+                Console.WriteLine($"[{product.GetType().Name}] {product}");
             }
         }
     }
