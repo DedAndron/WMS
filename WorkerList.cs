@@ -1,14 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace WMS
 {
     internal class WorkerList
     {
-        private List<Worker> _workers = new();
+        private readonly List<Worker> _workers = new();
 
         public void AddWorker(Worker worker)
         {
@@ -39,10 +37,23 @@ namespace WMS
             _workers[index] = newWorker;
         }
 
+        public void ChangePost(Worker worker, WorkerRole newRole, Warehouse warehouse)
+        {
+            Worker newWorker = newRole switch
+            {
+                WorkerRole.Admin => new Admin(worker.Name, this),
+                WorkerRole.Manager => new Manager(worker.Name),
+                WorkerRole.Storekeeper => new Storekeeper(worker.Name, warehouse),
+                _ => throw new ArgumentException("Unknown worker role", nameof(newRole))
+            };
+
+            newWorker.Active = worker.Active;
+            ChangePost(worker, newWorker);
+        }
+
         public IReadOnlyList<Worker> GetAll()
         {
             return _workers.AsReadOnly();
         }
     }
-
 }
