@@ -10,7 +10,7 @@ namespace WMS
     {
         void AddWorker(Worker worker);
         void BlockWorker(string name);
-        void ChangePost(Worker oldWorker, Worker newWorker);
+        void ChangePost(Worker worker, WorkerRole newRole, Warehouse warehouse);
     }
 
     internal class Admin : Worker, IWorkersControl
@@ -35,9 +35,9 @@ namespace WMS
             Console.WriteLine($"A worker has been blocked.\n{name}");
         }
 
-        public void ChangePost(Worker oldWorker, Worker newWorker)
+        public void ChangePost(Worker worker, WorkerRole newRole, Warehouse warehouse)
         {
-            _workerList.ChangePost(oldWorker, newWorker);
+            _workerList.ChangePost(worker, newRole, warehouse);
         }
     }
 
