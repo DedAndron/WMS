@@ -17,9 +17,6 @@ namespace WMS
             admin.AddWorker(storekeeper);
             admin.AddWorker(manager);
 
-            warehouse.LowStockAlert += OnLowStockAlert;
-            SeedProducts(warehouse);
-
             while (true)
             {
                 Console.WriteLine("Select user menu:");
@@ -68,32 +65,6 @@ namespace WMS
 
                 Console.WriteLine();
             }
-        }
-
-        private static void OnLowStockAlert(object? sender, LowStockEventArgs e)
-        {
-            Console.WriteLine($"[LOW STOCK ALERT] Product '{e.Product.Name}' has only {e.Quantity} item(s) left.");
-        }
-
-        private static void SeedProducts(Warehouse warehouse)
-        {
-            warehouse.Add(new Electronics
-            {
-                ID = 1,
-                Name = "Laptop",
-                Price = 1200m,
-                Weight = 2.4f,
-                Quantity = 10
-            });
-
-            warehouse.Add(new Electronics
-            {
-                ID = 2,
-                Name = "Mouse",
-                Price = 25m,
-                Weight = 0.1f,
-                Quantity = 3
-            });
         }
     }
 }

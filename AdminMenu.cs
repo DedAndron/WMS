@@ -54,17 +54,7 @@ namespace WMS
                 return;
             }
 
-            Console.Write("Role (admin/manager/storekeeper): ");
-            var roleInput = (Console.ReadLine() ?? string.Empty).Trim().ToLowerInvariant();
-
-            Worker? worker = roleInput switch
-            {
-                "admin" => new Admin(name, _workerList),
-                "manager" => new Manager(name),
-                "storekeeper" => new Storekeeper(name, _warehouse),
-                _ => null
-            };
-
+            Worker? worker = CreateWorkerByChoice(name);
             if (worker == null)
             {
                 Console.WriteLine("Unknown role.");
@@ -72,6 +62,32 @@ namespace WMS
             }
 
             _admin.AddWorker(worker);
+        }
+
+        private Worker? CreateWorkerByChoice(string name)
+        {
+            Console.WriteLine("Choose worker role:");
+            Console.WriteLine("1 - Admin");
+            Console.WriteLine("2 - Manager");
+            Console.WriteLine("3 - Storekeeper");
+            Console.Write("Role number: ");
+
+            if (!int.TryParse(Console.ReadLine(), out var roleChoice))
+            {
+                return null;
+            }
+
+            switch (roleChoice)
+            {
+                case 1:
+                    return new Admin(name, _workerList);
+                case 2:
+                    return new Manager(name);
+                case 3:
+                    return new Storekeeper(name, _warehouse);
+                default:
+                    return null;
+            }
         }
 
         private void BlockWorker()
@@ -94,17 +110,7 @@ namespace WMS
                 return;
             }
 
-            Console.Write("New role (admin/manager/storekeeper): ");
-            var roleInput = (Console.ReadLine() ?? string.Empty).Trim().ToLowerInvariant();
-
-            var role = roleInput switch
-            {
-                "admin" => WorkerRole.Admin,
-                "manager" => WorkerRole.Manager,
-                "storekeeper" => WorkerRole.Storekeeper,
-                _ => WorkerRole.None
-            };
-
+            WorkerRole role = ReadWorkerRoleChoice();
             if (role == WorkerRole.None)
             {
                 Console.WriteLine("Unknown role.");
@@ -113,6 +119,28 @@ namespace WMS
 
             _admin.ChangePost(worker, role, _warehouse);
             Console.WriteLine("Role has been changed.");
+        }
+
+        private static WorkerRole ReadWorkerRoleChoice()
+        {
+            Console.WriteLine("Choose new worker role:");
+            Console.WriteLine("1 - Admin");
+            Console.WriteLine("2 - Manager");
+            Console.WriteLine("3 - Storekeeper");
+            Console.Write("Role number: ");
+
+            if (!int.TryParse(Console.ReadLine(), out var roleChoice))
+            {
+                return WorkerRole.None;
+            }
+
+            return roleChoice switch
+            {
+                1 => WorkerRole.Admin,
+                2 => WorkerRole.Manager,
+                3 => WorkerRole.Storekeeper,
+                _ => WorkerRole.None
+            };
         }
     }
 }
